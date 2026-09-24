@@ -1,0 +1,44 @@
+# Régénère data/spots.json chaque lundi (et à la demande), puis le committe s'il a changé.
+# Source FFVL si le secret FFVL_API_KEY est défini, sinon ParaglidingEarth.
+name: Mise à jour des décollages
+
+on:
+  schedule:
+    - cron: '0 4 * * 1' # lundi 04:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-spots
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+
+      - name: Construire data/spots.json
+        run: node scripts/build-spots.mjs
+        env:
+          FFVL_API_KEY: ${{ secrets.FFVL_API_KEY }}
+
+      - name: Committer si le fichier a changé
+        run: |
+          if [ -z "$(git status --porcelain -- data/spots.json)" ]; then
+            echo "data/spots.json inchangé."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/spots.json
+          git commit -m "Mise à jour des décollages ($(date -u +%Y-%m-%d))"
+          git pull --rebase
+          git push

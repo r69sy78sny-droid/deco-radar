@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Déco Radar</title>
+    <meta
+      name="description"
+      content="Go ou passe ton chemin ? Les meilleurs décollages de parapente de France pour un jour donné : météo AROME haute résolution, orientation du déco, temps et coût du trajet."
+    />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M3 15C7 7 25 7 29 15' fill='none' stroke='%230e7490' stroke-width='4' stroke-linecap='round'/%3E%3Cpath d='M9 15l7 11 7-11' fill='none' stroke='%230e7490' stroke-width='2'/%3E%3C/svg%3E"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <header class="top">
+      <div class="wrap top-inner">
+        <div class="brand">
+          <svg class="logo" viewBox="0 0 32 32" aria-hidden="true">
+            <path d="M3 15C7 7 25 7 29 15" />
+            <path d="M9 15l7 11 7-11" class="lines" />
+          </svg>
+          <div>
+            <h1>Déco Radar</h1>
+            <p class="tagline">Go ou passe ton chemin ? Les décos de France jugés sur la météo AROME et le trajet.</p>
+          </div>
+        </div>
+        <button type="button" class="ghost theme-toggle" id="theme-toggle" aria-label="Changer de thème">Thème : auto</button>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <form id="search" class="panel search" autocomplete="off">
+        <div class="field city">
+          <label for="city">Ville de départ</label>
+          <input id="city" name="city" list="city-list" value="Paris (75)" required />
+          <datalist id="city-list"></datalist>
+        </div>
+        <div class="field">
+          <label for="date">Jour</label>
+          <select id="date" name="date"></select>
+        </div>
+        <div class="field">
+          <label for="mode">Transport</label>
+          <select id="mode" name="mode">
+            <option value="car">Voiture</option>
+            <option value="train">Train</option>
+            <option value="best">Le plus rapide</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="maxHours">Trajet max : <output id="maxHours-out">6 h</output></label>
+          <input id="maxHours" name="maxHours" type="range" min="1" max="9" step="0.5" value="6" />
+        </div>
+        <div class="field">
+          <label for="profile">Niveau</label>
+          <select id="profile" name="profile"></select>
+        </div>
+        <div class="field window">
+          <span class="label" id="window-label">Créneau de vol</span>
+          <div class="pair" role="group" aria-labelledby="window-label">
+            <select id="windowStart" name="windowStart" aria-label="Début du créneau"></select>
+            <span aria-hidden="true">→</span>
+            <select id="windowEnd" name="windowEnd" aria-label="Fin du créneau"></select>
+          </div>
+        </div>
+
+        <details class="advanced">
+          <summary>Réglages avancés</summary>
+          <div class="adv-grid">
+            <div class="field">
+              <label for="passengers">Personnes dans la voiture</label>
+              <input id="passengers" name="passengers" type="number" min="1" max="5" step="1" value="1" />
+            </div>
+            <div class="field">
+              <label for="fuelPrice">Carburant (€/L)</label>
+              <input id="fuelPrice" name="fuelPrice" type="number" min="0.5" max="4" step="0.01" value="1.85" />
+            </div>
+            <div class="field">
+              <label for="consumption">Consommation (L/100 km)</label>
+              <input id="consumption" name="consumption" type="number" min="2" max="20" step="0.1" value="6.5" />
+            </div>
+            <div class="field check">
+              <label><input id="tolls" name="tolls" type="checkbox" checked /> Compter les péages</label>
+            </div>
+            <div class="field">
+              <label for="meteoWeight">Poids de la météo : <output id="meteoWeight-out">60 %</output></label>
+              <input id="meteoWeight" name="meteoWeight" type="range" min="30" max="90" step="5" value="60" />
+            </div>
+            <div class="field">
+              <label for="points">Points météo par analyse</label>
+              <input id="points" name="points" type="number" min="30" max="600" step="10" value="250" />
+              <small>Au-delà de ~300, l'analyse ralentit pour respecter le quota gratuit d'Open-Meteo.</small>
+            </div>
+            <div class="field wide">
+              <label for="sncfKey">Clé API SNCF (facultative, pour les vrais horaires de train)</label>
+              <input id="sncfKey" name="sncfKey" type="password" placeholder="Laisse vide : temps de train estimé" />
+              <small
+                >Gratuite sur
+                <a href="https://numerique.sncf.com/startup/api/token-developpeur/" target="_blank" rel="noopener"
+                  >numerique.sncf.com</a
+                >. Elle reste dans ton navigateur et n'est envoyée qu'à api.sncf.com.</small
+              >
+            </div>
+          </div>
+        </details>
+
+        <button type="submit" class="primary" id="go-btn">Analyser</button>
+      </form>
+
+      <section id="status" class="status" hidden aria-live="polite">
+        <div class="status-line"><span id="status-text">…</span><span id="status-count"></span></div>
+        <progress id="progress" max="100" value="0"></progress>
+      </section>
+
+      <section id="error" class="panel error" hidden role="alert"></section>
+
+      <section id="results" hidden>
+        <div class="summary panel" id="summary"></div>
+        <div class="layout">
+          <div class="list">
+            <div id="cards"></div>
+            <details class="eliminated panel" id="eliminated">
+              <summary id="eliminated-title">Passe ton chemin</summary>
+              <ul id="eliminated-list"></ul>
+            </details>
+          </div>
+          <div class="map-col">
+            <div id="map" role="region" aria-label="Carte des décollages"></div>
+            <ul class="legend">
+              <li><i class="dot go"></i>Go</li>
+              <li><i class="dot jouable"></i>Jouable</li>
+              <li><i class="dot non"></i>Passe ton chemin</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel how" id="how">
+        <h2>Comment le score est calculé</h2>
+        <ol>
+          <li>
+            <strong>La météo est éliminatoire.</strong> Chaque heure du créneau est jugée : pluie ≥ 0,2 mm, vent moyen ou
+            rafales au-dessus de ton niveau, air turbulent (gros écart rafales/vent avec des rafales fortes), vent fort vers 1 500 m, vent mal orienté
+            pour le déco, brouillard, déco dans le nuage. Il faut au moins 2 h volables d'affilée, et le moindre orage
+            dans le créneau annule la journée. Sinon : <strong>score 0</strong>.
+          </li>
+          <li>
+            <strong>Qualité météo (0–100)</strong> sur le meilleur créneau : vent dans la plage idéale, rafales faibles,
+            vent dans l'axe du déco, ciel partiellement nuageux, instabilité modérée, puis bonus de durée (plein à 4 h).
+          </li>
+          <li>
+            <strong>Trajet (0–100)</strong> : 75 % durée (100 à 1 h, 0 à 8 h) et 25 % coût aller-retour par personne
+            (100 à 15 €, 0 à 200 €).
+          </li>
+          <li>
+            <strong>Score global</strong> = 60 % météo + 40 % trajet (réglable). <span class="pill go">Go</span> ≥ 65
+            avec une météo ≥ 60 · <span class="pill jouable">Jouable</span> ≥ 40 ·
+            <span class="pill non">Passe ton chemin</span> sinon.
+          </li>
+        </ol>
+        <p class="muted">
+          Outil d'aide à la préparation, pas une autorisation de voler : consulte la fiche du site, les balises et ton
+          moniteur, et juge sur place.
+        </p>
+      </section>
+    </main>
+
+    <footer class="wrap foot">
+      <p>
+        Météo : <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a> (Météo-France AROME /
+        ARPEGE, ECMWF, CC BY 4.0) · Itinéraires :
+        <a href="https://project-osrm.org/" target="_blank" rel="noopener">OSRM</a> (© contributeurs OpenStreetMap) ·
+        Communes : <a href="https://geo.api.gouv.fr/" target="_blank" rel="noopener">geo.api.gouv.fr</a> · Gares :
+        <a href="https://ressources.data.sncf.com/explore/dataset/gares-de-voyageurs/" target="_blank" rel="noopener">SNCF Open Data</a> (ODbL) · <span id="spots-attribution">Décollages : …</span>
+      </p>
+      <p class="muted" id="spots-meta"></p>
+    </footer>
+
+    <template id="card-tpl">
+      <article class="card">
+        <header class="card-head">
+          <div class="score" aria-label="Score"></div>
+          <div class="title">
+            <h3></h3>
+            <p class="where muted"></p>
+          </div>
+          <span class="pill verdict"></span>
+        </header>
+        <div class="card-body">
+          <div class="rose"></div>
+          <ul class="facts"></ul>
+        </div>
+        <ul class="travel"></ul>
+        <p class="warn" hidden></p>
+        <div class="bars"></div>
+        <details class="hourly">
+          <summary>Heure par heure</summary>
+          <div class="table-wrap"></div>
+        </details>
+        <nav class="links"></nav>
+      </article>
+    </template>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script type="module" src="js/app.js"></script>
+  </body>
+</html>

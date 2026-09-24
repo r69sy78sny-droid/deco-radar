@@ -1,0 +1,50 @@
+# Publie le site sur GitHub Pages à chaque push sur main, après la mise à jour hebdomadaire des
+# décollages, ou à la demande. Les tests du moteur de score doivent passer avant la mise en ligne.
+# Réglage requis une fois : Settings → Pages → Build and deployment → Source : « GitHub Actions ».
+name: Publication GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_run:
+    workflows: ['Mise à jour des décollages']
+    types: [completed]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: main
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      - run: npm test
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: main
+      - uses: actions/configure-pages@v6
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: .
+      - id: deployment
+        uses: actions/deploy-pages@v5
