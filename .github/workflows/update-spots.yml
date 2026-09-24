@@ -1,4 +1,5 @@
-# Régénère data/spots.json chaque lundi (et à la demande), puis le committe s'il a changé.
+# Régénère data/spots.json chaque lundi (et à la demande), puis data/destinations.json et
+# data/fares.json (destinations de vol, gares, Flixbus, tarifs SNCF), et committe ce qui a changé.
 # Source FFVL si le secret FFVL_API_KEY est défini, sinon ParaglidingEarth.
 name: Mise à jour des décollages
 
@@ -30,15 +31,29 @@ jobs:
         env:
           FFVL_API_KEY: ${{ secrets.FFVL_API_KEY }}
 
-      - name: Committer si le fichier a changé
+      # Un échec ici ne doit pas bloquer la mise à jour des décollages : l'étape est tolérée,
+      # les fichiers précédents restent en place et le job est marqué en échec à la fin.
+      - name: Construire data/destinations.json et data/fares.json
+        id: destinations
+        continue-on-error: true
+        run: node scripts/build-destinations.mjs
+
+      - name: Committer les fichiers modifiés
         run: |
-          if [ -z "$(git status --porcelain -- data/spots.json)" ]; then
-            echo "data/spots.json inchangé."
+          FILES="data/spots.json data/destinations.json data/fares.json"
+          if [ -z "$(git status --porcelain -- $FILES)" ]; then
+            echo "Données inchangées."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/spots.json
-          git commit -m "Mise à jour des décollages ($(date -u +%Y-%m-%d))"
+          git add $FILES
+          git commit -m "Mise à jour des décollages et des destinations ($(date -u +%Y-%m-%d))"
           git pull --rebase
           git push
+
+      - name: Signaler l'échec des destinations
+        if: steps.destinations.outcome == 'failure'
+        run: |
+          echo "::error::build-destinations.mjs a échoué : data/destinations.json et data/fares.json n'ont pas été mis à jour."
+          exit 1

@@ -583,6 +583,141 @@ progress::-moz-progress-bar {
   border-radius: 99px;
 }
 
+/* Trajets aller-retour d'une destination */
+.trips {
+  margin-top: 12px;
+  border-top: 1px solid var(--border);
+  padding-top: 10px;
+  display: grid;
+  gap: 8px;
+}
+.trips h4 {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--muted);
+  font-weight: 650;
+}
+.trip {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 8px 10px;
+  font-size: 0.88rem;
+  display: grid;
+  gap: 6px;
+}
+.trip.chosen {
+  border-color: var(--accent);
+  box-shadow: inset 3px 0 0 var(--accent);
+}
+.trip-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 8px;
+}
+.trip-head svg {
+  width: 17px;
+  height: 17px;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.trip-total {
+  font-weight: 750;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.trip-head .muted {
+  font-size: 0.84rem;
+}
+.chosen-tag {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+.trip a,
+.trip button {
+  justify-self: start;
+  font-size: 0.85rem;
+}
+.rides {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 4px;
+}
+.rides li {
+  display: grid;
+  grid-template-columns: 4.2em minmax(0, 1fr) auto;
+  gap: 8px;
+  align-items: baseline;
+  font-variant-numeric: tabular-nums;
+}
+.rides b {
+  white-space: nowrap;
+}
+.leg {
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 650;
+}
+.more summary {
+  cursor: pointer;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+.more p {
+  margin: 6px 0 2px;
+  font-size: 0.8rem;
+}
+.warn-inline {
+  color: var(--mid);
+  font-weight: 600;
+}
+.small {
+  font-size: 0.8rem;
+  margin: 0;
+}
+.access {
+  margin: 0;
+  font-size: 0.85rem;
+}
+
+/* Décos d'une destination */
+.spots-list {
+  margin-top: 10px;
+}
+.spots-list summary {
+  cursor: pointer;
+  font-size: 0.85rem;
+  color: var(--muted);
+  font-weight: 600;
+}
+.spots-list ul {
+  list-style: none;
+  margin: 6px 0 0;
+  padding: 0;
+}
+.spots-list li {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 8px;
+  align-items: baseline;
+  padding: 5px 0;
+  border-top: 1px solid var(--border);
+  font-size: 0.85rem;
+}
+.spots-list .status {
+  text-align: right;
+  color: var(--muted);
+}
+.spots-list li.ko .status {
+  color: var(--no);
+}
+
 .hourly {
   margin-top: 10px;
 }
@@ -737,6 +872,19 @@ tr.ko td:last-child {
 }
 
 @media (max-width: 520px) {
+  .rides li {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+  .rides .leg {
+    grid-column: 1 / -1;
+  }
+  .spots-list li {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+  .spots-list .status {
+    grid-column: 2;
+    text-align: left;
+  }
   .search,
   .adv-grid {
     grid-template-columns: minmax(0, 1fr);

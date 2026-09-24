@@ -50,7 +50,7 @@ export const SCORE_WEIGHTS = {
 /** Barèmes du score trajet. */
 export const TRAVEL_SCALE = {
   fullScoreHours: 1, // ≤ 1 h de trajet (aller) → 100
-  zeroScoreHours: 8, // ≥ 8 h → 0
+  zeroScoreHours: 12, // ≥ 12 h → 0 (un bus de nuit fait souvent 8 à 10 h)
   fullScoreEuros: 15, // coût aller-retour par personne ≤ 15 € → 100
   zeroScoreEuros: 200, // ≥ 200 € → 0
 };
@@ -88,6 +88,9 @@ export const TRAIN_MODEL = {
   roadDetour: 1.4,
 };
 
+/** Flixbus avant d'avoir les vrais horaires : vitesse moyenne, attente, prix d'un aller. */
+export const FLIXBUS_ESTIMATE = { detour: 1.3, speed: 65, overhead: 0.75, base: 6, perKm: 0.08 };
+
 /** Estimation grossière d'un temps de route, utilisée seulement pour présélectionner les spots. */
 export const ROAD_GUESS = { detour: 1.3, speed: 85, overhead: 0.25 };
 
@@ -124,13 +127,15 @@ export const LIMITS = {
   weatherConcurrency: 2,
   weatherPointsPerRun: 250, // points météo par analyse (au-delà, l'analyse patiente pour respecter le quota)
   osrmBatch: 99, // destinations par requête OSRM
-  sncfTop: 8, // trajets SNCF réels calculés pour les N meilleurs spots
+  sncfTop: 8, // trajets SNCF réels calculés pour les N meilleures destinations
+  flixbusAuto: 5, // horaires Flixbus chargés d'office pour les N meilleures destinations
 };
 
 export const DEFAULTS = {
   city: { name: 'Paris', dept: '75', lat: 48.8566, lon: 2.3522 },
-  mode: 'car', // car | train | best
-  maxHours: 6,
+  mode: 'bus', // bus | train | car | best
+  maxHours: 12,
+  fareProfile: 'normal', // normal | avantage | etudiant
   profile: 'debutant',
   windowStart: 10,
   windowEnd: 18,

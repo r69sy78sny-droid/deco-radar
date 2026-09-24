@@ -49,52 +49,50 @@ export async function carRoutes(origin, spots, signal) {
   return out;
 }
 
-/** Coût aller-retour par personne en voiture : carburant + péages estimés, partagés entre passagers. */
-export function carCost(km, cost) {
+/** Coût aller-retour en voiture, détaillé : carburant, péages estimés, total, part de chacun. */
+export function carCostDetail(km, cost) {
   const fuel = 2 * km * (cost.consumption / 100) * cost.fuelPrice;
   const motorwayKm = km > 100 ? (km - 50) * 0.8 : 0; // hypothèse : 80 % d'autoroute au-delà des 50 premiers km
   const tolls = cost.tolls ? 2 * motorwayKm * cost.tollPerKm : 0;
-  return (fuel + tolls) / Math.max(1, cost.passengers);
+  const total = fuel + tolls;
+  return { fuel, tolls, total, euros: total / Math.max(1, cost.passengers) };
 }
 
-/** Train sans clé API : estimation à partir des distances (gare la plus proche du déco). */
-export function trainEstimate(origin, spot, cost, m = TRAIN_MODEL) {
-  if (!spot.station) return null;
-  const crow = haversineKm(origin, spot.station);
+/** Coût aller-retour par personne en voiture. */
+export const carCost = (km, cost) => carCostDetail(km, cost).euros;
+
+/** Train sans horaires réels : durée d'un aller jusqu'à une gare et prix aller-retour estimés. */
+export function railEstimate(origin, station, cost, m = TRAIN_MODEL) {
+  const crow = haversineKm(origin, station);
   const long = crow >= m.longThresholdKm;
   const railKm = crow * m.railDetour;
-  const railHours = railKm / (long ? m.longSpeed : m.shortSpeed) + (long ? m.longOverhead : m.shortOverhead);
-  const last = lastMile(spot, cost, m);
   return {
-    hours: railHours + last.hours,
-    euros: 2 * railKm * (long ? cost.trainLongPerKm : cost.trainShortPerKm) + last.euros,
-    station: spot.station,
-    lastMile: last.mode,
-    estimated: true,
+    hours: railKm / (long ? m.longSpeed : m.shortSpeed) + (long ? m.longOverhead : m.shortOverhead),
+    euros: 2 * railKm * (long ? cost.trainLongPerKm : cost.trainShortPerKm),
   };
 }
 
-function lastMile(spot, cost, m) {
-  const km = spot.station.km;
-  if (km <= m.walkMaxKm) return { mode: 'à pied', hours: km / 4.5, euros: 0 };
-  const roadKm = km * m.roadDetour;
+/** Accès au déco depuis une gare ou un arrêt de bus : à pied si c'est tout près, sinon taxi ou navette. */
+export function accessTo(from, target, cost, m = TRAIN_MODEL) {
+  const km = haversineKm(from, target) * m.roadDetour;
+  if (km <= m.walkMaxKm) return { km, hours: km / 4.5, taxi: 0, walk: true };
   return {
-    mode: 'taxi ou navette',
-    hours: roadKm / m.lastMileSpeed + m.lastMileWait,
-    euros: (2 * (cost.taxiBase + roadKm * cost.taxiPerKm)) / Math.max(1, cost.passengers),
+    km,
+    hours: km / m.lastMileSpeed + m.lastMileWait,
+    taxi: (2 * (cost.taxiBase + km * cost.taxiPerKm)) / Math.max(1, cost.passengers),
+    walk: false,
   };
 }
 
 /**
- * Horaires réels via l'API SNCF (Navitia) : trajet départ → gare la plus proche du déco, le matin
- * du jour choisi. Clé gratuite : https://numerique.sncf.com/startup/api/token-developpeur/
+ * Horaires réels via l'API SNCF (Navitia) : trajet départ → gare de la destination, le matin du
+ * jour choisi. Clé gratuite : https://numerique.sncf.com/startup/api/token-developpeur/
  */
-export async function sncfJourney(origin, spot, date, key, cost, signal) {
-  if (!spot.station) return null;
+export async function sncfJourney(origin, station, date, key, signal) {
   const p = new URLSearchParams({
     from: `${origin.lon};${origin.lat}`,
-    to: `${spot.station.lon};${spot.station.lat}`,
-    datetime: `${date.replaceAll('-', '')}T060000`,
+    to: `${station.lon};${station.lat}`,
+    datetime: `${date.replaceAll('-', '')}T050000`,
     datetime_represents: 'departure',
     count: '4',
     max_walking_duration_to_pt: '1800',
@@ -108,15 +106,11 @@ export async function sncfJourney(origin, spot, date, key, cost, signal) {
   // On privilégie une arrivée avant midi, puis la durée la plus courte.
   const morning = journeys.filter((j) => Number(j.arrival_date_time.slice(9, 11)) < 12);
   const best = (morning.length ? morning : journeys).sort((a, b) => a.duration - b.duration)[0];
-  const estimate = trainEstimate(origin, spot, cost);
-  const last = lastMile(spot, cost, TRAIN_MODEL);
   return {
-    ...estimate,
-    hours: best.duration / 3600 + last.hours,
+    hours: best.duration / 3600,
     departure: best.departure_date_time.slice(9, 13),
     arrival: best.arrival_date_time.slice(9, 13),
     transfers: best.nb_transfers,
-    estimated: false,
   };
 }
 

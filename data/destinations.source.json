@@ -1,0 +1,237 @@
+[
+  {
+    "id": "annecy",
+    "name": "Annecy",
+    "center": {
+      "commune": "Talloires-Montmin",
+      "dept": "74"
+    },
+    "radiusKm": 11,
+    "hub": {
+      "commune": "Annecy",
+      "dept": "74"
+    },
+    "expect": [
+      "Forclaz",
+      "Planfait",
+      "Semnoz"
+    ],
+    "note": "Col de la Forclaz et Planfait au-dessus du lac : navette l'été, sinon taxi ou stop"
+  },
+  {
+    "id": "chamonix",
+    "name": "Chamonix",
+    "center": {
+      "commune": "Chamonix-Mont-Blanc",
+      "dept": "74"
+    },
+    "radiusKm": 9,
+    "hub": {
+      "commune": "Chamonix-Mont-Blanc",
+      "dept": "74"
+    },
+    "fareRadiusKm": 30,
+    "expect": [
+      "Planpraz",
+      "Brévent",
+      "Plan de l'Aiguille"
+    ],
+    "note": "Décos en téléphérique : Planpraz / Brévent, Plan de l'Aiguille (vérifie l'ouverture des remontées). L'Aiguille du Midi est réservée aux pilotes confirmés, et l'été la vallée impose ses règles (créneaux, zones interdites) : renseigne-toi sur place."
+  },
+  {
+    "id": "puy-de-dome",
+    "name": "Puy de Dôme",
+    "center": {
+      "commune": "Orcines",
+      "dept": "63"
+    },
+    "radiusKm": 8,
+    "hub": {
+      "commune": "Clermont-Ferrand",
+      "dept": "63"
+    },
+    "expect": [
+      "Puy de Dôme"
+    ],
+    "note": "Montée au sommet par le Panoramique des Dômes, train à crémaillère"
+  },
+  {
+    "id": "saint-hilaire-du-touvet",
+    "name": "Saint-Hilaire-du-Touvet",
+    "center": {
+      "commune": "Saint-Hilaire",
+      "dept": "38"
+    },
+    "radiusKm": 4,
+    "hub": {
+      "commune": "Grenoble",
+      "dept": "38"
+    },
+    "expect": [
+      "Saint Hilaire",
+      "Dent de Crolles"
+    ],
+    "note": "Funiculaire depuis Montfort (Crolles)"
+  },
+  {
+    "id": "passy-plaine-joux",
+    "name": "Passy – Plaine-Joux",
+    "center": {
+      "commune": "Passy",
+      "dept": "74"
+    },
+    "radiusKm": 6,
+    "hub": {
+      "commune": "Sallanches",
+      "dept": "74"
+    },
+    "expect": [
+      "Plaine Joux"
+    ],
+    "note": "Plaine-Joux est accessible par la route ; les autres décos se font à pied"
+  },
+  {
+    "id": "vercors-lans",
+    "name": "Vercors – Lans-en-Vercors",
+    "center": {
+      "commune": "Lans-en-Vercors",
+      "dept": "38"
+    },
+    "radiusKm": 7,
+    "hub": {
+      "commune": "Grenoble",
+      "dept": "38"
+    },
+    "expect": [
+      "Lans"
+    ],
+    "note": "Car Grenoble → Lans-en-Vercors / Villard-de-Lans"
+  },
+  {
+    "id": "millau",
+    "name": "Millau",
+    "center": {
+      "commune": "Millau",
+      "dept": "12"
+    },
+    "radiusKm": 7,
+    "hub": {
+      "commune": "Millau",
+      "dept": "12"
+    },
+    "expect": [
+      "Brunas",
+      "Puncho"
+    ],
+    "exclude": {
+      "pge:22950": "Millau Plage, 359 m au bord du Tarn : atterrissage du Puncho d'Agast, pas un décollage",
+      "pge:22951": "Millau Golf, 358 m en fond de vallée : terrain d'atterrissage, pas un décollage",
+      "pge:22952": "Millau Graufesenque, 355 m en fond de vallée : terrain d'atterrissage, pas un décollage"
+    },
+    "note": "Brunas et le Puncho d'Agast dominent la ville, accès par la route"
+  },
+  {
+    "id": "dune-du-pilat",
+    "name": "Dune du Pilat",
+    "center": {
+      "commune": "La Teste-de-Buch",
+      "dept": "33"
+    },
+    "radiusKm": 6,
+    "hub": {
+      "commune": "Arcachon",
+      "dept": "33"
+    },
+    "expect": [
+      "Pilat"
+    ],
+    "note": "Vol de dune par vent d'ouest à nord-ouest ; bus local depuis la gare d'Arcachon"
+  },
+  {
+    "id": "saint-andre-les-alpes",
+    "name": "Saint-André-les-Alpes",
+    "center": {
+      "commune": "Saint-André-les-Alpes",
+      "dept": "04"
+    },
+    "radiusKm": 6,
+    "hub": {
+      "commune": "Nice",
+      "dept": "06"
+    },
+    "expect": [
+      "Chalvet"
+    ],
+    "note": "Pas de gare SNCF : Train des Pignes (Chemins de fer de Provence) de Nice à Saint-André-les-Alpes, environ 2 h, puis piste du Chalvet"
+  },
+  {
+    "id": "gourdon-greolieres",
+    "name": "Gourdon – Gréolières",
+    "center": {
+      "commune": "Cipières",
+      "dept": "06"
+    },
+    "radiusKm": 9,
+    "hub": {
+      "commune": "Grasse",
+      "dept": "06"
+    },
+    "expect": [
+      "Gourdon",
+      "Gréolières"
+    ],
+    "note": "Décos au-dessus des gorges du Loup, accès par la route depuis Grasse"
+  },
+  {
+    "id": "laragne-chabre",
+    "name": "Laragne – Chabre",
+    "center": {
+      "commune": "Laragne-Montéglin",
+      "dept": "05"
+    },
+    "radiusKm": 6.5,
+    "hub": {
+      "commune": "Laragne-Montéglin",
+      "dept": "05"
+    },
+    "expect": [
+      "Chabre"
+    ],
+    "note": "Montagne de Chabre : piste jusqu'au déco depuis Laragne"
+  },
+  {
+    "id": "val-louron-saint-lary",
+    "name": "Val Louron – Saint-Lary",
+    "center": {
+      "commune": "Ens",
+      "dept": "65"
+    },
+    "radiusKm": 7,
+    "hub": {
+      "commune": "Lannemezan",
+      "dept": "65"
+    },
+    "expect": [
+      "Louron",
+      "Adet"
+    ],
+    "note": "Gare de Lannemezan, puis car ou taxi vers Arreau, Loudenvielle (Louron) ou Saint-Lary"
+  },
+  {
+    "id": "markstein",
+    "name": "Le Markstein",
+    "center": {
+      "commune": "Fellering",
+      "dept": "68"
+    },
+    "radiusKm": 7,
+    "hub": {
+      "commune": "Mulhouse",
+      "dept": "68"
+    },
+    "expect": [
+      "Markstein"
+    ],
+    "note": "TER Mulhouse → Kruth (arrêt Fellering), puis route du Markstein"
+  }
+]

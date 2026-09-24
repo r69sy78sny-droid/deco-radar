@@ -4,7 +4,7 @@
 import { describe, test } from 'node:test';
 import assert from 'node:assert/strict';
 
-import { PROFILES, WEATHER_RULES, VERDICTS } from '../js/config.js';
+import { PROFILES, WEATHER_RULES, VERDICTS, TRAVEL_SCALE, SCORE_WEIGHTS } from '../js/config.js';
 import { SECTORS, angleDiff, sectorOf, orientationFactor, formatOrientations, haversineKm } from '../js/geo.js';
 import {
   evaluateHour,
@@ -704,14 +704,20 @@ describe('explainNoGo', () => {
 // ---------------------------------------------------------------------------
 
 describe('travelScore', () => {
-  test('1 h et 15 € ou moins : 100', () => {
-    assert.equal(travelScore({ hours: 1, euros: 15 }), 100);
+  // Barème lu dans config.js (la durée « zéro » est passée de 8 h à 12 h) : rien de codé en dur ici.
+  const { fullScoreHours: H_PLEIN, zeroScoreHours: H_ZERO, fullScoreEuros: E_PLEIN, zeroScoreEuros: E_ZERO } = TRAVEL_SCALE;
+  const H_MILIEU = (H_PLEIN + H_ZERO) / 2;
+  const E_MILIEU = (E_PLEIN + E_ZERO) / 2;
+  const PART_TEMPS = SCORE_WEIGHTS.trajetTemps;
+
+  test(`${H_PLEIN} h et ${E_PLEIN} € ou moins : 100`, () => {
+    assert.equal(travelScore({ hours: H_PLEIN, euros: E_PLEIN }), 100);
     assert.equal(travelScore({ hours: 0.2, euros: 0 }), 100);
   });
 
-  test('8 h et 200 € ou plus : 0', () => {
-    assert.equal(travelScore({ hours: 8, euros: 200 }), 0);
-    assert.equal(travelScore({ hours: 12, euros: 500 }), 0);
+  test(`${H_ZERO} h et ${E_ZERO} € ou plus : 0`, () => {
+    assert.equal(travelScore({ hours: H_ZERO, euros: E_ZERO }), 0);
+    assert.equal(travelScore({ hours: H_ZERO + 4, euros: 2.5 * E_ZERO }), 0);
   });
 
   test('durée inconnue : 0', () => {
@@ -719,15 +725,15 @@ describe('travelScore', () => {
     assert.equal(travelScore({ euros: 10 }), 0);
   });
 
-  test('75 % durée, 25 % coût, interpolation linéaire', () => {
-    assert.equal(travelScore({ hours: 8, euros: 15 }), 25);
-    assert.equal(travelScore({ hours: 1, euros: 200 }), 75);
-    assert.equal(travelScore({ hours: 4.5, euros: 107.5 }), 50);
+  test(`${100 * PART_TEMPS} % durée, ${100 * (1 - PART_TEMPS)} % coût, interpolation linéaire`, () => {
+    assert.equal(travelScore({ hours: H_ZERO, euros: E_PLEIN }), Math.round(100 * (1 - PART_TEMPS)));
+    assert.equal(travelScore({ hours: H_PLEIN, euros: E_ZERO }), Math.round(100 * PART_TEMPS));
+    assert.equal(travelScore({ hours: H_MILIEU, euros: E_MILIEU }), 50);
   });
 
   test('coût inconnu : seule la durée compte', () => {
-    assert.equal(travelScore({ hours: 4.5, euros: null }), 50);
-    assert.equal(travelScore({ hours: 1, euros: undefined }), 100);
+    assert.equal(travelScore({ hours: H_MILIEU, euros: null }), 50);
+    assert.equal(travelScore({ hours: H_PLEIN, euros: undefined }), 100);
   });
 });
 
@@ -882,7 +888,7 @@ describe('Propriétés', () => {
   test('un trajet plus long (même coût) ne donne jamais un meilleur travelScore', () => {
     for (const euros of [null, 0, 15, 40, 107.5, 200, 350]) {
       let precedent = Infinity;
-      for (let hours = 0; hours <= 10; hours += 0.05) {
+      for (let hours = 0; hours <= TRAVEL_SCALE.zeroScoreHours + 2; hours += 0.05) {
         const s = travelScore({ hours, euros });
         assert.ok(s <= precedent, `${hours} h, ${euros} € : ${s} > ${precedent}`);
         assert.ok(s >= 0 && s <= 100);

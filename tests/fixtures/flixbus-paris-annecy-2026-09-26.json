@@ -1,0 +1,1031 @@
+{
+ "trips": [
+  {
+   "departure_city_id": "40de8964-8646-11e6-9066-549f350fcb0c",
+   "arrival_city_id": "40dfe930-8646-11e6-9066-549f350fcb0c",
+   "date": "2026-09-26T00:00:00+02:00",
+   "results": {
+    "ic:dcc5426b-9603-11e6-9066-549f350fcb0c:dcc11362-9603-11e6-9066-549f350fcb0c/c5de5322-38e7-43aa-b455-319d3fa2b773:dcc07383-9603-11e6-9066-549f350fcb0c:dcc07383-9603-11e6-9066-549f350fcb0c:d235bd39-08a4-4d2b-b0eb-d649f659cb70": {
+     "status": "available",
+     "departure": {
+      "date": "2026-09-26T00:30:00+02:00",
+      "city_id": "40de8964-8646-11e6-9066-549f350fcb0c",
+      "station_id": "dcc5426b-9603-11e6-9066-549f350fcb0c"
+     },
+     "arrival": {
+      "date": "2026-09-26T09:20:00+02:00",
+      "city_id": "40dfe930-8646-11e6-9066-549f350fcb0c",
+      "station_id": "dcc11362-9603-11e6-9066-549f350fcb0c"
+     },
+     "duration": {
+      "hours": 8,
+      "minutes": 50
+     },
+     "price": {
+      "total": 58.48,
+      "original": 58.48,
+      "average": 58.48,
+      "total_with_platform_fee": 59.47,
+      "average_with_platform_fee": 59.47
+     },
+     "available": {
+      "seats": 17,
+      "bike_slots": 0
+     },
+     "legs": [
+      {
+       "departure": {
+        "date": "2026-09-26T00:30:00+02:00",
+        "city_id": "40de8964-8646-11e6-9066-549f350fcb0c",
+        "station_id": "dcc5426b-9603-11e6-9066-549f350fcb0c"
+       },
+       "arrival": {
+        "date": "2026-09-26T07:45:00+02:00",
+        "city_id": "40df5fc1-8646-11e6-9066-549f350fcb0c",
+        "station_id": "dcc07383-9603-11e6-9066-549f350fcb0c"
+       },
+       "means_of_transport": "bus"
+      },
+      {
+       "departure": {
+        "date": "2026-09-26T08:35:00+02:00",
+        "city_id": "40df5fc1-8646-11e6-9066-549f350fcb0c",
+        "station_id": "dcc07383-9603-11e6-9066-549f350fcb0c"
+       },
+       "arrival": {
+        "date": "2026-09-26T09:20:00+02:00",
+        "city_id": "40dfe930-8646-11e6-9066-549f350fcb0c",
+        "station_id": "dcc11362-9603-11e6-9066-549f350fcb0c"
+       },
+       "means_of_transport": "bus"
+      }
+     ]
+    },
+    "ic:dcc5426b-9603-11e6-9066-549f350fcb0c:dcc11362-9603-11e6-9066-549f350fcb0c/ad5ddbec-6f0e-4ef0-b0de-695547cf09d7:9fe81919-2d89-48f4-81a3-322dc4b5614d:9fe81919-2d89-48f4-81a3-322dc4b5614d:e6cc697a-d3ee-449b-8415-4ce5110d3483": {
+     "status": "available",
+     "departure": {
+      "date": "2026-09-26T01:10:00+02:00",
+      "city_id": "40de8964-8646-11e6-9066-549f350fcb0c",
+      "station_id": "dcc5426b-9603-11e6-9066-549f350fcb0c"
+     },
+     "arrival": {
+      "date": "2026-09-26T10:15:00+02:00",
+      "city_id": "40dfe930-8646-11e6-9066-549f350fcb0c",
+      "station_id": "dcc11362-9603-11e6-9066-549f350fcb0c"
+     },
+     "duration": {
+      "hours": 9,
+      "minutes": 5
+     },
+     "price": {
+      "total": 89.48,
+      "original": 89.48,
+      "average": 89.48,
+      "total_with_platform_fee": 90.47,
+      "average_with_platform_fee": 90.47
+     },
+     "available": {
+      "seats": 13,
+      "bike_slots": 0
+     },
+     "legs": [
+      {
+       "departure": {
+        "date": "2026-09-26T01:10:00+02:00",
+        "city_id": "40de8964-8646-11e6-9066-549f350fcb0c",
+        "station_id": "dcc5426b-9603-11e6-9066-549f350fcb0c"
+       },
+       "arrival": {
+        "date": "2026-09-26T06:50:00+02:00",
+        "city_id": "40df89c1-8646-11e6-9066-549f350fcb0c",
+        "station_id": "9fe81919-2d89-48f4-81a3-322dc4b5614d"
+       },
+       "means_of_transport": "bus"
+      },
+      {
+       "departure": {
+        "date": "2026-09-26T08:35:00+02:00",
+        "city_id": "40df89c1-8646-11e6-9066-549f350fcb0c",
+        "station_id": "9fe81919-2d89-48f4-81a3-322dc4b5614d"
+       },
+       "arrival": {
+        "date": "2026-09-26T10:15:00+02:00",
+        "city_id": "40dfe930-8646-11e6-9066-549f350fcb0c",
+        "station_id": "dcc11362-9603-11e6-9066-549f350fcb0c"
+       },
+       "means_of_transport": "bus"
+      }
+     ]
+    },
+    "ic:dcbd8ba2-9603-11e6-9066-549f350fcb0c:dcc11362-9603-11e6-9066-549f350fcb0c/a8690741-19d9-4073-b7e4-6f3b51a3bac8:9fe81919-2d89-48f4-81a3-322dc4b5614d:9fe81919-2d89-48f4-81a3-322dc4b5614d:e6cc697a-d3ee-449b-8415-4ce5110d3483": {
+     "status": "available",
+     "departure": {
+      "date": "2026-09-26T01:45:00+02:00",
+      "city_id": "40de8964-8646-11e6-9066-549f350fcb0c",
+      "station_id": "dcbd8ba2-9603-11e6-9066-549f350fcb0c"
+     },
+     "arrival": {
+      "date": "2026-09-26T10:15:00+02:00",
+      "city_id": "40dfe930-8646-11e6-9066-549f350fcb0c",
+      "station_id": "dcc11362-9603-11e6-9066-549f350fcb0c"
+     },
+     "duration": {
+      "hours": 8,
+      "minutes": 30
+     },
+     "price": {
+      "total": 57.48,
+      "original": 57.48,
+      "average": 57.48,
+      "total_with_platform_fee": 58.47,
+      "average_with_platform_fee": 58.47
+     },
+     "available": {
+      "seats": 13,
+      "bike_slots": 0
+     },
+     "legs": [
+      {
+       "departure": {
+        "date": "2026-09-26T01:45:00+02:00",
+        "city_id": "40de8964-8646-11e6-9066-549f350fcb0c",
+        "station_id": "dcbd8ba2-9603-11e6-9066-549f350fcb0c"
+       },
+       "arrival": {
+        "date": "2026-09-26T07:30:00+02:00",
+        "city_id": "40df89c1-8646-11e6-9066-549f350fcb0c",
+        "station_id": "9fe81919-2d89-48f4-81a3-322dc4b5614d"
+       },
+       "means_of_transport": "bus"
+      },
+      {
+       "departure": {
+        "date": "2026-09-26T08:35:00+02:00",
+        "city_id": "40df89c1-8646-11e6-9066-549f350fcb0c",
+        "station_id": "9fe81919-2d89-48f4-81a3-322dc4b5614d"
+       },
+       "arrival": {
+        "date": "2026-09-26T10:15:00+02:00",
+        "city_id": "40dfe930-8646-11e6-9066-549f350fcb0c",
+        "station_id": "dcc11362-9603-11e6-9066-549f350fcb0c"
+       },
+       "means_of_transport": "bus"
+      }
+     ]
+    },
+    "ic:dcbd8ba2-9603-11e6-9066-549f350fcb0c:dcc11362-9603-11e6-9066-549f350fcb0c/c7c4fb14-53d1-4d5b-ae23-5ff84c832acb:dcc07383-9603-11e6-9066-549f350fcb0c:dcc07383-9603-11e6-9066-549f350fcb0c:c2f2dbd9-59ae-4a3e-8b91-f69f6625c50e": {
+     "status": "available",
+     "departure": {
+      "date": "2026-09-26T06:40:00+02:00",
+      "city_id": "40de8964-8646-11e6-9066-549f350fcb0c",
+      "station_id": "dcbd8ba2-9603-11e6-9066-549f350fcb0c"
+     },
+     "arrival": {
+      "date": "2026-09-26T16:00:00+02:00",
+      "city_id": "40dfe930-8646-11e6-9066-549f350fcb0c",
+      "station_id": "dcc11362-9603-11e6-9066-549f350fcb0c"
+     },
+     "duration": {
+      "hours": 9,
+      "minutes": 20
+     },
+     "price": {
+      "total": 45.48,
+      "original": 45.48,
+      "average": 45.48,
+      "total_with_platform_fee": 46.47,
+      "average_with_platform_fee": 46.47
+     },
+     "available": {
+      "seats": 27,
+      "bike_slots": 0
+     },
+     "legs": [
+      {
+       "departure": {
+        "date": "2026-09-26T06:40:00+02:00",
+        "city_id": "40de8964-8646-11e6-9066-549f350fcb0c",
+        "station_id": "dcbd8ba2-9603-11e6-9066-549f350fcb0c"
+       },
+       "arrival": {
+        "date": "2026-09-26T14:15:00+02:00",
+        "city_id": "40df5fc1-8646-11e6-9066-549f350fcb0c",
+        "station_id": "dcc07383-9603-11e6-9066-549f350fcb0c"
+       },
+       "means_of_transport": "bus"
+      },
+      {
+       "departure": {
+        "date": "2026-09-26T15:15:00+02:00",
+        "city_id": "40df5fc1-8646-11e6-9066-549f350fcb0c",
+        "station_id": "dcc07383-9603-11e6-9066-549f350fcb0c"
+       },
+       "arrival": {
+        "date": "2026-09-26T16:00:00+02:00",
+        "city_id": "40dfe930-8646-11e6-9066-549f350fcb0c",
+        "station_id": "dcc11362-9603-11e6-9066-549f350fcb0c"
+       },
+       "means_of_transport": "bus"
+      }
+     ]
+    },
+    "ic:dcc5426b-9603-11e6-9066-549f350fcb0c:dcc11362-9603-11e6-9066-549f350fcb0c/12ef9d9a-0dce-4d03-b38e-78ecf434eed9:9fe81919-2d89-48f4-81a3-322dc4b5614d:9fe81919-2d89-48f4-81a3-322dc4b5614d:de36ed86-504f-472b-8363-443b64636fe3": {
+     "status": "available",
+     "departure": {
+      "date": "2026-09-26T07:00:00+02:00",
+      "city_id": "40de8964-8646-11e6-9066-549f350fcb0c",
+      "station_id": "dcc5426b-9603-11e6-9066-549f350fcb0c"
+     },
+     "arrival": {
+      "date": "2026-09-26T16:55:00+02:00",
+      "city_id": "40dfe930-8646-11e6-9066-549f350fcb0c",
+      "station_id": "dcc11362-9603-11e6-9066-549f350fcb0c"
+     },
+     "duration": {
+      "hours": 9,
+      "minutes": 55
+     },
+     "price": {
+      "total": 56.48,
+      "original": 56.48,
+      "average": 56.48,
+      "total_with_platform_fee": 57.47,
+      "average_with_platform_fee": 57.47
+     },
+     "available": {
+      "seats": 14,
+      "bike_slots": 0
+     },
+     "legs": [
+      {
+       "departure": {
+        "date": "2026-09-26T07:00:00+02:00",
+        "city_id": "40de8964-8646-11e6-9066-549f350fcb0c",
+        "station_id": "dcc5426b-9603-11e6-9066-549f350fcb0c"
+       },
+       "arrival": {
+        "date": "2026-09-26T12:55:00+02:00",
+        "city_id": "40df89c1-8646-11e6-9066-549f350fcb0c",
+        "station_id": "9fe81919-2d89-48f4-81a3-322dc4b5614d"
+       },
+       "means_of_transport": "bus"
+      },
+      {
+       "departure": {
+        "date": "2026-09-26T15:05:00+02:00",
+        "city_id": "40df89c1-8646-11e6-9066-549f350fcb0c",
+        "station_id": "9fe81919-2d89-48f4-81a3-322dc4b5614d"
+       },
+       "arrival": {
+        "date": "2026-09-26T16:55:00+02:00",
+        "city_id": "40dfe930-8646-11e6-9066-549f350fcb0c",
+        "station_id": "dcc11362-9603-11e6-9066-549f350fcb0c"
+       },
+       "means_of_transport": "bus"
+      }
+     ]
+    },
+    "ic:dcc5426b-9603-11e6-9066-549f350fcb0c:dcc11362-9603-11e6-9066-549f350fcb0c/f0fc9da1-f365-430e-b1cd-73907b9c10a2:9fe81919-2d89-48f4-81a3-322dc4b5614d:9fe81919-2d89-48f4-81a3-322dc4b5614d:6558f0a7-fba8-4f28-9bfc-34d35945549c": {
+     "status": "available",
+     "departure": {
+      "date": "2026-09-26T08:40:00+02:00",
+      "city_id": "40de8964-8646-11e6-9066-549f350fcb0c",
+      "station_id": "dcc5426b-9603-11e6-9066-549f350fcb0c"
+     },
+     "arrival": {
+      "date": "2026-09-26T18:15:00+02:00",
+      "city_id": "40dfe930-8646-11e6-9066-549f350fcb0c",
+      "station_id": "dcc11362-9603-11e6-9066-549f350fcb0c"
+     },
+     "duration": {
+      "hours": 9,
+      "minutes": 35
+     },
+     "price": {
+      "total": 43.98,
+      "original": 43.98,
+      "average": 43.98,
+      "total_with_platform_fee": 44.97,
+      "average_with_platform_fee": 44.97
+     },
+     "available": {
+      "seats": 46,
+      "bike_slots": 0
+     },
+     "legs": [
+      {
+       "departure": {
+        "date": "2026-09-26T08:40:00+02:00",
+        "city_id": "40de8964-8646-11e6-9066-549f350fcb0c",
+        "station_id": "dcc5426b-9603-11e6-9066-549f350fcb0c"
+       },
+       "arrival": {
+        "date": "2026-09-26T14:45:00+02:00",
+        "city_id": "40df89c1-8646-11e6-9066-549f350fcb0c",
+        "station_id": "9fe81919-2d89-48f4-81a3-322dc4b5614d"
+       },
+       "means_of_transport": "bus"
+      },
+      {
+       "departure": {
+        "date": "2026-09-26T15:55:00+02:00",
+        "city_id": "40df89c1-8646-11e6-9066-549f350fcb0c",
+        "station_id": "9fe81919-2d89-48f4-81a3-322dc4b5614d"
+       },
+       "arrival": {
+        "date": "2026-09-26T18:15:00+02:00",
+        "city_id": "40dfe930-8646-11e6-9066-549f350fcb0c",
+        "station_id": "dcc11362-9603-11e6-9066-549f350fcb0c"
+       },
+       "means_of_transport": "bus"
+      }
+     ]
+    },
+    "ic:dcc5426b-9603-11e6-9066-549f350fcb0c:dcc11362-9603-11e6-9066-549f350fcb0c/8502594a-bbcf-4e7e-9164-b40a107682e0:9fe81919-2d89-48f4-81a3-322dc4b5614d:9fe81919-2d89-48f4-81a3-322dc4b5614d:25147185-0d17-4d68-a1a3-f27e7c7e451b": {
+     "status": "available",
+     "departure": {
+      "date": "2026-09-26T10:00:00+02:00",
+      "city_id": "40de8964-8646-11e6-9066-549f350fcb0c",
+      "station_id": "dcc5426b-9603-11e6-9066-549f350fcb0c"
+     },
+     "arrival": {
+      "date": "2026-09-26T19:30:00+02:00",
+      "city_id": "40dfe930-8646-11e6-9066-549f350fcb0c",
+      "station_id": "dcc11362-9603-11e6-9066-549f350fcb0c"
+     },
+     "duration": {
+      "hours": 9,
+      "minutes": 30
+     },
+     "price": {
+      "total": 69.48,
+      "original": 69.48,
+      "average": 69.48,
+      "total_with_platform_fee": 70.47,
+      "average_with_platform_fee": 70.47
+     },
+     "available": {
+      "seats": 9,
+      "bike_slots": 0
+     },
+     "legs": [
+      {
+       "departure": {
+        "date": "2026-09-26T10:00:00+02:00",
+        "city_id": "40de8964-8646-11e6-9066-549f350fcb0c",
+        "station_id": "dcc5426b-9603-11e6-9066-549f350fcb0c"
+       },
+       "arrival": {
+        "date": "2026-09-26T16:25:00+02:00",
+        "city_id": "40df89c1-8646-11e6-9066-549f350fcb0c",
+        "station_id": "9fe81919-2d89-48f4-81a3-322dc4b5614d"
+       },
+       "means_of_transport": "bus"
+      },
+      {
+       "departure": {
+        "date": "2026-09-26T17:40:00+02:00",
+        "city_id": "40df89c1-8646-11e6-9066-549f350fcb0c",
+        "station_id": "9fe81919-2d89-48f4-81a3-322dc4b5614d"
+       },
+       "arrival": {
+        "date": "2026-09-26T19:30:00+02:00",
+        "city_id": "40dfe930-8646-11e6-9066-549f350fcb0c",
+        "station_id": "dcc11362-9603-11e6-9066-549f350fcb0c"
+       },
+       "means_of_transport": "bus"
+      }
+     ]
+    },
+    "ic:dcc5426b-9603-11e6-9066-549f350fcb0c:dcc11362-9603-11e6-9066-549f350fcb0c/d1825fa3-6ad6-493e-ab5c-a73d32d0c8bf:9fe81919-2d89-48f4-81a3-322dc4b5614d:9fe81919-2d89-48f4-81a3-322dc4b5614d:61fadc87-d636-41f7-9716-d7813d0da692": {
+     "status": "available",
+     "departure": {
+      "date": "2026-09-26T10:25:00+02:00",
+      "city_id": "40de8964-8646-11e6-9066-549f350fcb0c",
+      "station_id": "dcc5426b-9603-11e6-9066-549f350fcb0c"
+     },
+     "arrival": {
+      "date": "2026-09-26T20:35:00+02:00",
+      "city_id": "40dfe930-8646-11e6-9066-549f350fcb0c",
+      "station_id": "dcc11362-9603-11e6-9066-549f350fcb0c"
+     },
+     "duration": {
+      "hours": 10,
+      "minutes": 10
+     },
+     "price": {
+      "total": 43.98,
+      "original": 43.98,
+      "average": 43.98,
+      "total_with_platform_fee": 44.97,
+      "average_with_platform_fee": 44.97
+     },
+     "available": {
+      "seats": 26,
+      "bike_slots": 0
+     },
+     "legs": [
+      {
+       "departure": {
+        "date": "2026-09-26T10:25:00+02:00",
+        "city_id": "40de8964-8646-11e6-9066-549f350fcb0c",
+        "station_id": "dcc5426b-9603-11e6-9066-549f350fcb0c"
+       },
+       "arrival": {
+        "date": "2026-09-26T18:05:00+02:00",
+        "city_id": "40df89c1-8646-11e6-9066-549f350fcb0c",
+        "station_id": "9fe81919-2d89-48f4-81a3-322dc4b5614d"
+       },
+       "means_of_transport": "bus"
+      },
+      {
+       "departure": {
+        "date": "2026-09-26T18:55:00+02:00",
+        "city_id": "40df89c1-8646-11e6-9066-549f350fcb0c",
+        "station_id": "9fe81919-2d89-48f4-81a3-322dc4b5614d"
+       },
+       "arrival": {
+        "date": "2026-09-26T20:35:00+02:00",
+        "city_id": "40dfe930-8646-11e6-9066-549f350fcb0c",
+        "station_id": "dcc11362-9603-11e6-9066-549f350fcb0c"
+       },
+       "means_of_transport": "bus"
+      }
+     ]
+    },
+    "ic:dcbd8ba2-9603-11e6-9066-549f350fcb0c:dcc11362-9603-11e6-9066-549f350fcb0c/f143b03f-c34b-49aa-a29c-4db2eab805c0:dcc0627e-9603-11e6-9066-549f350fcb0c:dcc0627e-9603-11e6-9066-549f350fcb0c:fce99a10-32b5-4354-8e44-3ca4f372bf47": {
+     "status": "available",
+     "departure": {
+      "date": "2026-09-26T11:05:00+02:00",
+      "city_id": "40de8964-8646-11e6-9066-549f350fcb0c",
+      "station_id": "dcbd8ba2-9603-11e6-9066-549f350fcb0c"
+     },
+     "arrival": {
+      "date": "2026-09-26T21:00:00+02:00",
+      "city_id": "40dfe930-8646-11e6-9066-549f350fcb0c",
+      "station_id": "dcc11362-9603-11e6-9066-549f350fcb0c"
+     },
+     "duration": {
+      "hours": 9,
+      "minutes": 55
+     },
+     "price": {
+      "total": 47.98,
+      "original": 47.98,
+      "average": 47.98,
+      "total_with_platform_fee": 48.97,
+      "average_with_platform_fee": 48.97
+     },
+     "available": {
+      "seats": 19,
+      "bike_slots": 0
+     },
+     "legs": [
+      {
+       "departure": {
+        "date": "2026-09-26T11:05:00+02:00",
+        "city_id": "40de8964-8646-11e6-9066-549f350fcb0c",
+        "station_id": "dcbd8ba2-9603-11e6-9066-549f350fcb0c"
+       },
+       "arrival": {
+        "date": "2026-09-26T18:15:00+02:00",
+        "city_id": "40df585b-8646-11e6-9066-549f350fcb0c",
+        "station_id": "dcc0627e-9603-11e6-9066-549f350fcb0c"
+       },
+       "means_of_transport": "bus"
+      },
+      {
+       "departure": {
+        "date": "2026-09-26T19:40:00+02:00",
+        "city_id": "40df585b-8646-11e6-9066-549f350fcb0c",
+        "station_id": "dcc0627e-9603-11e6-9066-549f350fcb0c"
+       },
+       "arrival": {
+        "date": "2026-09-26T21:00:00+02:00",
+        "city_id": "40dfe930-8646-11e6-9066-549f350fcb0c",
+        "station_id": "dcc11362-9603-11e6-9066-549f350fcb0c"
+       },
+       "means_of_transport": "bus"
+      }
+     ]
+    },
+    "ic:dcc0b0b8-9603-11e6-9066-549f350fcb0c:dcc11362-9603-11e6-9066-549f350fcb0c/c7576e3d-51de-4b00-84cf-a2aa888f5855:9fe81919-2d89-48f4-81a3-322dc4b5614d:9fe81919-2d89-48f4-81a3-322dc4b5614d:d014626d-d11f-4351-b8aa-3b8848b928f4": {
+     "status": "available",
+     "departure": {
+      "date": "2026-09-26T19:50:00+02:00",
+      "city_id": "40de8964-8646-11e6-9066-549f350fcb0c",
+      "station_id": "dcc0b0b8-9603-11e6-9066-549f350fcb0c"
+     },
+     "arrival": {
+      "date": "2026-09-27T06:40:00+02:00",
+      "city_id": "40dfe930-8646-11e6-9066-549f350fcb0c",
+      "station_id": "dcc11362-9603-11e6-9066-549f350fcb0c"
+     },
+     "duration": {
+      "hours": 10,
+      "minutes": 50
+     },
+     "price": {
+      "total": 146.48,
+      "original": 146.48,
+      "average": 146.48,
+      "total_with_platform_fee": 147.47,
+      "average_with_platform_fee": 147.47
+     },
+     "available": {
+      "seats": 4,
+      "bike_slots": 0
+     },
+     "legs": [
+      {
+       "departure": {
+        "date": "2026-09-26T19:50:00+02:00",
+        "city_id": "40de8964-8646-11e6-9066-549f350fcb0c",
+        "station_id": "dcc0b0b8-9603-11e6-9066-549f350fcb0c"
+       },
+       "arrival": {
+        "date": "2026-09-27T01:10:00+02:00",
+        "city_id": "40df89c1-8646-11e6-9066-549f350fcb0c",
+        "station_id": "9fe81919-2d89-48f4-81a3-322dc4b5614d"
+       },
+       "means_of_transport": "bus"
+      },
+      {
+       "departure": {
+        "date": "2026-09-27T05:05:00+02:00",
+        "city_id": "40df89c1-8646-11e6-9066-549f350fcb0c",
+        "station_id": "9fe81919-2d89-48f4-81a3-322dc4b5614d"
+       },
+       "arrival": {
+        "date": "2026-09-27T06:40:00+02:00",
+        "city_id": "40dfe930-8646-11e6-9066-549f350fcb0c",
+        "station_id": "dcc11362-9603-11e6-9066-549f350fcb0c"
+       },
+       "means_of_transport": "bus"
+      }
+     ]
+    },
+    "ic:dcc5426b-9603-11e6-9066-549f350fcb0c:dcc11362-9603-11e6-9066-549f350fcb0c/fb292409-2e39-47d2-ab70-53040dfe9ac7:9fe81919-2d89-48f4-81a3-322dc4b5614d:9fe81919-2d89-48f4-81a3-322dc4b5614d:d014626d-d11f-4351-b8aa-3b8848b928f4": {
+     "status": "full",
+     "departure": {
+      "date": "2026-09-26T20:00:00+02:00",
+      "city_id": "40de8964-8646-11e6-9066-549f350fcb0c",
+      "station_id": "dcc5426b-9603-11e6-9066-549f350fcb0c"
+     },
+     "arrival": {
+      "date": "2026-09-27T06:40:00+02:00",
+      "city_id": "40dfe930-8646-11e6-9066-549f350fcb0c",
+      "station_id": "dcc11362-9603-11e6-9066-549f350fcb0c"
+     },
+     "duration": {
+      "hours": 10,
+      "minutes": 40
+     },
+     "price": {
+      "total": 0,
+      "original": 0,
+      "average": 0,
+      "total_with_platform_fee": 0,
+      "average_with_platform_fee": 0
+     },
+     "available": {
+      "seats": 0,
+      "bike_slots": 0
+     },
+     "legs": [
+      {
+       "departure": {
+        "date": "2026-09-26T20:00:00+02:00",
+        "city_id": "40de8964-8646-11e6-9066-549f350fcb0c",
+        "station_id": "dcc5426b-9603-11e6-9066-549f350fcb0c"
+       },
+       "arrival": {
+        "date": "2026-09-27T02:00:00+02:00",
+        "city_id": "40df89c1-8646-11e6-9066-549f350fcb0c",
+        "station_id": "9fe81919-2d89-48f4-81a3-322dc4b5614d"
+       },
+       "means_of_transport": "bus"
+      },
+      {
+       "departure": {
+        "date": "2026-09-27T05:05:00+02:00",
+        "city_id": "40df89c1-8646-11e6-9066-549f350fcb0c",
+        "station_id": "9fe81919-2d89-48f4-81a3-322dc4b5614d"
+       },
+       "arrival": {
+        "date": "2026-09-27T06:40:00+02:00",
+        "city_id": "40dfe930-8646-11e6-9066-549f350fcb0c",
+        "station_id": "dcc11362-9603-11e6-9066-549f350fcb0c"
+       },
+       "means_of_transport": "bus"
+      }
+     ]
+    },
+    "direct:d014626d-d11f-4351-b8aa-3b8848b928f4:dcbd8ba2-9603-11e6-9066-549f350fcb0c:dcc11362-9603-11e6-9066-549f350fcb0c": {
+     "status": "available",
+     "departure": {
+      "date": "2026-09-26T23:10:00+02:00",
+      "city_id": "40de8964-8646-11e6-9066-549f350fcb0c",
+      "station_id": "dcbd8ba2-9603-11e6-9066-549f350fcb0c"
+     },
+     "arrival": {
+      "date": "2026-09-27T06:40:00+02:00",
+      "city_id": "40dfe930-8646-11e6-9066-549f350fcb0c",
+      "station_id": "dcc11362-9603-11e6-9066-549f350fcb0c"
+     },
+     "duration": {
+      "hours": 7,
+      "minutes": 30
+     },
+     "price": {
+      "total": 51.99,
+      "original": 51.99,
+      "average": 51.99,
+      "total_with_platform_fee": 52.98,
+      "average_with_platform_fee": 52.98
+     },
+     "available": {
+      "seats": 17,
+      "bike_slots": 0
+     },
+     "legs": [
+      {
+       "departure": {
+        "date": "2026-09-26T23:10:00+02:00",
+        "city_id": "40de8964-8646-11e6-9066-549f350fcb0c",
+        "station_id": "dcbd8ba2-9603-11e6-9066-549f350fcb0c"
+       },
+       "arrival": {
+        "date": "2026-09-27T06:40:00+02:00",
+        "city_id": "40dfe930-8646-11e6-9066-549f350fcb0c",
+        "station_id": "dcc11362-9603-11e6-9066-549f350fcb0c"
+       },
+       "means_of_transport": "bus"
+      }
+     ]
+    },
+    "ic:dcc5426b-9603-11e6-9066-549f350fcb0c:dcc11362-9603-11e6-9066-549f350fcb0c/aea8b14b-fbdb-4941-a3bf-f99a62941f13:dcc0627e-9603-11e6-9066-549f350fcb0c:dcc0627e-9603-11e6-9066-549f350fcb0c:d541c7ce-e7f3-4acf-b058-052976ffbeae": {
+     "status": "available",
+     "departure": {
+      "date": "2026-09-26T23:10:00+02:00",
+      "city_id": "40de8964-8646-11e6-9066-549f350fcb0c",
+      "station_id": "dcc5426b-9603-11e6-9066-549f350fcb0c"
+     },
+     "arrival": {
+      "date": "2026-09-27T08:20:00+02:00",
+      "city_id": "40dfe930-8646-11e6-9066-549f350fcb0c",
+      "station_id": "dcc11362-9603-11e6-9066-549f350fcb0c"
+     },
+     "duration": {
+      "hours": 9,
+      "minutes": 10
+     },
+     "price": {
+      "total": 63.48,
+      "original": 63.48,
+      "average": 63.48,
+      "total_with_platform_fee": 64.47,
+      "average_with_platform_fee": 64.47
+     },
+     "available": {
+      "seats": 16,
+      "bike_slots": 0
+     },
+     "legs": [
+      {
+       "departure": {
+        "date": "2026-09-26T23:10:00+02:00",
+        "city_id": "40de8964-8646-11e6-9066-549f350fcb0c",
+        "station_id": "dcc5426b-9603-11e6-9066-549f350fcb0c"
+       },
+       "arrival": {
+        "date": "2026-09-27T06:10:00+02:00",
+        "city_id": "40df585b-8646-11e6-9066-549f350fcb0c",
+        "station_id": "dcc0627e-9603-11e6-9066-549f350fcb0c"
+       },
+       "means_of_transport": "bus"
+      },
+      {
+       "departure": {
+        "date": "2026-09-27T07:35:00+02:00",
+        "city_id": "40df585b-8646-11e6-9066-549f350fcb0c",
+        "station_id": "dcc0627e-9603-11e6-9066-549f350fcb0c"
+       },
+       "arrival": {
+        "date": "2026-09-27T08:20:00+02:00",
+        "city_id": "40dfe930-8646-11e6-9066-549f350fcb0c",
+        "station_id": "dcc11362-9603-11e6-9066-549f350fcb0c"
+       },
+       "means_of_transport": "bus"
+      }
+     ]
+    },
+    "ic:dcc0b0b8-9603-11e6-9066-549f350fcb0c:dcc11362-9603-11e6-9066-549f350fcb0c/aea8b14b-fbdb-4941-a3bf-f99a62941f13:dcc0627e-9603-11e6-9066-549f350fcb0c:dcc0627e-9603-11e6-9066-549f350fcb0c:d541c7ce-e7f3-4acf-b058-052976ffbeae": {
+     "status": "available",
+     "departure": {
+      "date": "2026-09-26T23:40:00+02:00",
+      "city_id": "40de8964-8646-11e6-9066-549f350fcb0c",
+      "station_id": "dcc0b0b8-9603-11e6-9066-549f350fcb0c"
+     },
+     "arrival": {
+      "date": "2026-09-27T08:20:00+02:00",
+      "city_id": "40dfe930-8646-11e6-9066-549f350fcb0c",
+      "station_id": "dcc11362-9603-11e6-9066-549f350fcb0c"
+     },
+     "duration": {
+      "hours": 8,
+      "minutes": 40
+     },
+     "price": {
+      "total": 63.48,
+      "original": 63.48,
+      "average": 63.48,
+      "total_with_platform_fee": 64.47,
+      "average_with_platform_fee": 64.47
+     },
+     "available": {
+      "seats": 16,
+      "bike_slots": 0
+     },
+     "legs": [
+      {
+       "departure": {
+        "date": "2026-09-26T23:40:00+02:00",
+        "city_id": "40de8964-8646-11e6-9066-549f350fcb0c",
+        "station_id": "dcc0b0b8-9603-11e6-9066-549f350fcb0c"
+       },
+       "arrival": {
+        "date": "2026-09-27T06:10:00+02:00",
+        "city_id": "40df585b-8646-11e6-9066-549f350fcb0c",
+        "station_id": "dcc0627e-9603-11e6-9066-549f350fcb0c"
+       },
+       "means_of_transport": "bus"
+      },
+      {
+       "departure": {
+        "date": "2026-09-27T07:35:00+02:00",
+        "city_id": "40df585b-8646-11e6-9066-549f350fcb0c",
+        "station_id": "dcc0627e-9603-11e6-9066-549f350fcb0c"
+       },
+       "arrival": {
+        "date": "2026-09-27T08:20:00+02:00",
+        "city_id": "40dfe930-8646-11e6-9066-549f350fcb0c",
+        "station_id": "dcc11362-9603-11e6-9066-549f350fcb0c"
+       },
+       "means_of_transport": "bus"
+      }
+     ]
+    },
+    "ic:dcc5426b-9603-11e6-9066-549f350fcb0c:dcc11362-9603-11e6-9066-549f350fcb0c/462dcb9c-ae7c-40f0-b2c4-5e02edc135fe:dcc07383-9603-11e6-9066-549f350fcb0c:dcc07383-9603-11e6-9066-549f350fcb0c:e501756f-5426-4e5b-ba45-d5bf68e20c53": {
+     "status": "available",
+     "departure": {
+      "date": "2026-09-27T00:30:00+02:00",
+      "city_id": "40de8964-8646-11e6-9066-549f350fcb0c",
+      "station_id": "dcc5426b-9603-11e6-9066-549f350fcb0c"
+     },
+     "arrival": {
+      "date": "2026-09-27T09:20:00+02:00",
+      "city_id": "40dfe930-8646-11e6-9066-549f350fcb0c",
+      "station_id": "dcc11362-9603-11e6-9066-549f350fcb0c"
+     },
+     "duration": {
+      "hours": 8,
+      "minutes": 50
+     },
+     "price": {
+      "total": 64.98,
+      "original": 64.98,
+      "average": 64.98,
+      "total_with_platform_fee": 65.97,
+      "average_with_platform_fee": 65.97
+     },
+     "available": {
+      "seats": 15,
+      "bike_slots": 0
+     },
+     "legs": [
+      {
+       "departure": {
+        "date": "2026-09-27T00:30:00+02:00",
+        "city_id": "40de8964-8646-11e6-9066-549f350fcb0c",
+        "station_id": "dcc5426b-9603-11e6-9066-549f350fcb0c"
+       },
+       "arrival": {
+        "date": "2026-09-27T07:45:00+02:00",
+        "city_id": "40df5fc1-8646-11e6-9066-549f350fcb0c",
+        "station_id": "dcc07383-9603-11e6-9066-549f350fcb0c"
+       },
+       "means_of_transport": "bus"
+      },
+      {
+       "departure": {
+        "date": "2026-09-27T08:35:00+02:00",
+        "city_id": "40df5fc1-8646-11e6-9066-549f350fcb0c",
+        "station_id": "dcc07383-9603-11e6-9066-549f350fcb0c"
+       },
+       "arrival": {
+        "date": "2026-09-27T09:20:00+02:00",
+        "city_id": "40dfe930-8646-11e6-9066-549f350fcb0c",
+        "station_id": "dcc11362-9603-11e6-9066-549f350fcb0c"
+       },
+       "means_of_transport": "bus"
+      }
+     ]
+    },
+    "ic:dcc5426b-9603-11e6-9066-549f350fcb0c:dcc11362-9603-11e6-9066-549f350fcb0c/a075c2bd-e152-4f7b-b50b-2d8cf7fe60da:9fe81919-2d89-48f4-81a3-322dc4b5614d:9fe81919-2d89-48f4-81a3-322dc4b5614d:17b0f470-e58a-4fec-aaf2-ffccc04cb1ee": {
+     "status": "available",
+     "departure": {
+      "date": "2026-09-27T01:10:00+02:00",
+      "city_id": "40de8964-8646-11e6-9066-549f350fcb0c",
+      "station_id": "dcc5426b-9603-11e6-9066-549f350fcb0c"
+     },
+     "arrival": {
+      "date": "2026-09-27T10:15:00+02:00",
+      "city_id": "40dfe930-8646-11e6-9066-549f350fcb0c",
+      "station_id": "dcc11362-9603-11e6-9066-549f350fcb0c"
+     },
+     "duration": {
+      "hours": 9,
+      "minutes": 5
+     },
+     "price": {
+      "total": 61.48,
+      "original": 61.48,
+      "average": 61.48,
+      "total_with_platform_fee": 62.47,
+      "average_with_platform_fee": 62.47
+     },
+     "available": {
+      "seats": 24,
+      "bike_slots": 0
+     },
+     "legs": [
+      {
+       "departure": {
+        "date": "2026-09-27T01:10:00+02:00",
+        "city_id": "40de8964-8646-11e6-9066-549f350fcb0c",
+        "station_id": "dcc5426b-9603-11e6-9066-549f350fcb0c"
+       },
+       "arrival": {
+        "date": "2026-09-27T06:50:00+02:00",
+        "city_id": "40df89c1-8646-11e6-9066-549f350fcb0c",
+        "station_id": "9fe81919-2d89-48f4-81a3-322dc4b5614d"
+       },
+       "means_of_transport": "bus"
+      },
+      {
+       "departure": {
+        "date": "2026-09-27T08:35:00+02:00",
+        "city_id": "40df89c1-8646-11e6-9066-549f350fcb0c",
+        "station_id": "9fe81919-2d89-48f4-81a3-322dc4b5614d"
+       },
+       "arrival": {
+        "date": "2026-09-27T10:15:00+02:00",
+        "city_id": "40dfe930-8646-11e6-9066-549f350fcb0c",
+        "station_id": "dcc11362-9603-11e6-9066-549f350fcb0c"
+       },
+       "means_of_transport": "bus"
+      }
+     ]
+    },
+    "ic:dcbd8ba2-9603-11e6-9066-549f350fcb0c:dcc11362-9603-11e6-9066-549f350fcb0c/48c9bd0d-5c99-4945-b5f0-f22f282623ff:9fe81919-2d89-48f4-81a3-322dc4b5614d:9fe81919-2d89-48f4-81a3-322dc4b5614d:17b0f470-e58a-4fec-aaf2-ffccc04cb1ee": {
+     "status": "available",
+     "departure": {
+      "date": "2026-09-27T01:45:00+02:00",
+      "city_id": "40de8964-8646-11e6-9066-549f350fcb0c",
+      "station_id": "dcbd8ba2-9603-11e6-9066-549f350fcb0c"
+     },
+     "arrival": {
+      "date": "2026-09-27T10:15:00+02:00",
+      "city_id": "40dfe930-8646-11e6-9066-549f350fcb0c",
+      "station_id": "dcc11362-9603-11e6-9066-549f350fcb0c"
+     },
+     "duration": {
+      "hours": 8,
+      "minutes": 30
+     },
+     "price": {
+      "total": 53.98,
+      "original": 53.98,
+      "average": 53.98,
+      "total_with_platform_fee": 54.97,
+      "average_with_platform_fee": 54.97
+     },
+     "available": {
+      "seats": 24,
+      "bike_slots": 0
+     },
+     "legs": [
+      {
+       "departure": {
+        "date": "2026-09-27T01:45:00+02:00",
+        "city_id": "40de8964-8646-11e6-9066-549f350fcb0c",
+        "station_id": "dcbd8ba2-9603-11e6-9066-549f350fcb0c"
+       },
+       "arrival": {
+        "date": "2026-09-27T07:30:00+02:00",
+        "city_id": "40df89c1-8646-11e6-9066-549f350fcb0c",
+        "station_id": "9fe81919-2d89-48f4-81a3-322dc4b5614d"
+       },
+       "means_of_transport": "bus"
+      },
+      {
+       "departure": {
+        "date": "2026-09-27T08:35:00+02:00",
+        "city_id": "40df89c1-8646-11e6-9066-549f350fcb0c",
+        "station_id": "9fe81919-2d89-48f4-81a3-322dc4b5614d"
+       },
+       "arrival": {
+        "date": "2026-09-27T10:15:00+02:00",
+        "city_id": "40dfe930-8646-11e6-9066-549f350fcb0c",
+        "station_id": "dcc11362-9603-11e6-9066-549f350fcb0c"
+       },
+       "means_of_transport": "bus"
+      }
+     ]
+    }
+   },
+   "means_of_transport": [
+    "bus"
+   ],
+   "departure": {
+    "earliest_date": "2026-09-26T00:30:00+02:00",
+    "latest_date": "2026-09-27T01:45:00+02:00",
+    "stations": [
+     "dcc5426b-9603-11e6-9066-549f350fcb0c",
+     "dcbd8ba2-9603-11e6-9066-549f350fcb0c",
+     "dcc0b0b8-9603-11e6-9066-549f350fcb0c"
+    ]
+   },
+   "arrival": {
+    "earliest_date": "2026-09-26T09:20:00+02:00",
+    "latest_date": "2026-09-27T10:15:00+02:00",
+    "stations": [
+     "dcc11362-9603-11e6-9066-549f350fcb0c"
+    ]
+   }
+  }
+ ],
+ "cities": {
+  "40de8964-8646-11e6-9066-549f350fcb0c": {
+   "name": "Paris",
+   "slug": "paris",
+   "legacy_id": 2015,
+   "id": "40de8964-8646-11e6-9066-549f350fcb0c"
+  },
+  "40df585b-8646-11e6-9066-549f350fcb0c": {
+   "name": "Genève",
+   "slug": "geneve",
+   "legacy_id": 3298,
+   "id": "40df585b-8646-11e6-9066-549f350fcb0c"
+  },
+  "40df5fc1-8646-11e6-9066-549f350fcb0c": {
+   "name": "Chambéry",
+   "slug": "chambery",
+   "legacy_id": 3338,
+   "id": "40df5fc1-8646-11e6-9066-549f350fcb0c"
+  },
+  "40df89c1-8646-11e6-9066-549f350fcb0c": {
+   "name": "Lyon",
+   "slug": "lyon",
+   "legacy_id": 3498,
+   "id": "40df89c1-8646-11e6-9066-549f350fcb0c"
+  },
+  "40dfe930-8646-11e6-9066-549f350fcb0c": {
+   "name": "Annecy",
+   "slug": "annecy",
+   "legacy_id": 3928,
+   "id": "40dfe930-8646-11e6-9066-549f350fcb0c"
+  }
+ },
+ "stations": {
+  "dcbd8ba2-9603-11e6-9066-549f350fcb0c": {
+   "id": "dcbd8ba2-9603-11e6-9066-549f350fcb0c",
+   "name": "Paris (Porte Maillot)"
+  },
+  "dcc0627e-9603-11e6-9066-549f350fcb0c": {
+   "id": "dcc0627e-9603-11e6-9066-549f350fcb0c",
+   "name": "Genève"
+  },
+  "dcc07383-9603-11e6-9066-549f350fcb0c": {
+   "id": "dcc07383-9603-11e6-9066-549f350fcb0c",
+   "name": "Chambéry"
+  },
+  "dcc0b0b8-9603-11e6-9066-549f350fcb0c": {
+   "id": "dcc0b0b8-9603-11e6-9066-549f350fcb0c",
+   "name": "Paris - Massy"
+  },
+  "dcc11362-9603-11e6-9066-549f350fcb0c": {
+   "id": "dcc11362-9603-11e6-9066-549f350fcb0c",
+   "name": "Annecy"
+  },
+  "dcc5426b-9603-11e6-9066-549f350fcb0c": {
+   "id": "dcc5426b-9603-11e6-9066-549f350fcb0c",
+   "name": "Paris (Bercy Seine)"
+  },
+  "9fe81919-2d89-48f4-81a3-322dc4b5614d": {
+   "id": "9fe81919-2d89-48f4-81a3-322dc4b5614d",
+   "name": "Lyon (Gerland)"
+  }
+ }
+}

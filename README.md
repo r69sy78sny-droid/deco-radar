@@ -1,6 +1,6 @@
 # Déco Radar
 
-**Go ou passe ton chemin ?** Une application web qui passe en revue les décollages de parapente de France pour un jour donné. Elle croise la météo haute résolution (AROME 1,3 km de Météo-France) avec l'orientation de chaque déco, puis le temps et le coût du trajet depuis ta ville. Chaque déco reçoit un score sur 100 et un verdict : 🟢 **Go**, 🟠 **Jouable** ou 🔴 **Passe ton chemin**.
+**Go ou passe ton chemin ?** Une application web qui passe en revue les grands sites de parapente de France (Annecy, Chamonix, Puy de Dôme, Saint-Hilaire-du-Touvet…) pour un jour donné. Pour chaque site, elle choisit le décollage dont l'orientation colle au vent prévu par la météo haute résolution (AROME 1,3 km de Météo-France), puis détaille l'aller-retour depuis ta ville : **Flixbus avec les vrais horaires et prix**, train avec les tarifs officiels SNCF, voiture avec carburant et péages. Chaque site reçoit un score sur 100 et un verdict : 🟢 **Go**, 🟠 **Jouable** ou 🔴 **Passe ton chemin**.
 
 > Outil d'aide à la préparation, pas une autorisation de voler. Consulte la fiche du site, les balises et ton moniteur, et juge toujours sur place.
 
@@ -11,7 +11,8 @@
 ```
                     ┌────────────── GitHub (dépôt public) ──────────────┐
   chaque lundi      │  Action « Mise à jour des décollages »            │
-  ───────────────►  │  scripts/build-spots.mjs → data/spots.json        │
+  ───────────────►  │  build-spots → build-destinations (spots, sites,  │
+                    │  tarifs SNCF)                                     │
                     │  (FFVL si clé, sinon ParaglidingEarth             │
                     │   + commune + gare SNCF la plus proche)           │
                     │                    │ commit                       │
@@ -21,10 +22,11 @@
                     └───────────────────────┬───────────────────────────┘
                                             │ https://<compte>.github.io/deco-radar/
                                             ▼
-  Navigateur ── data/spots.json (statique)
+  Navigateur ── data/spots.json, destinations.json, fares.json (statiques)
       │── geo.api.gouv.fr       ville de départ (autocomplétion)
       │── Open-Meteo            prévisions AROME HD → AROME → ARPEGE → ECMWF
-      │── OSRM                  durées et distances routières (1 requête pour ~100 spots)
+      │── Flixbus               horaires et prix réels, aller et retour
+      │── OSRM                  durées et distances routières
       └── API SNCF (facultatif) horaires réels de train, avec la clé de l'utilisateur
 ```
 
@@ -37,7 +39,10 @@ Pourquoi ce choix plutôt que Streamlit : aucun serveur à maintenir ni à réve
 | Décollages | [API FFVL](https://data.ffvl.fr/api) `base=terrains` | clé personnelle gratuite, à demander à informatique@ffvl.fr | Utilisée par l'Action hebdomadaire si le secret `FFVL_API_KEY` est défini. Les anciens fichiers publics `data.ffvl.fr/json/*.json` exigent eux aussi une clé. |
 | Décollages (repli) | [ParaglidingEarth](https://www.paraglidingearth.com/) | aucune | CC BY-SA 3.0. 1 051 décollages en France (hors treuils, sites privés ou interdits), orientations pour 83 % d'entre eux. |
 | Ville rattachée | [geo.api.gouv.fr](https://geo.api.gouv.fr/decoupage-administratif/communes) | aucune | Géocodage inverse côté script, recherche de la ville de départ côté navigateur. |
+| Sites de vol | liste éditable `data/destinations.source.json` | — | Chaque site regroupe les décollages dans un rayon autour de son centre, avec sa ville d'arrivée (gare, arrêt Flixbus). |
 | Gare la plus proche | [SNCF Open Data, gares de voyageurs](https://ressources.data.sncf.com/explore/dataset/gares-de-voyageurs/) | aucune | ODbL, 2 782 gares. |
+| Prix du train | SNCF Open Data : [tarifs TGV INOUI et OUIGO](https://ressources.data.sncf.com/explore/dataset/tarifs-tgv-inoui-ouigo/), [tarifs Intercités](https://ressources.data.sncf.com/explore/dataset/tarifs-intercites/) | aucune | Fourchette min–max d'un aller en 2de, par couple de gares et par profil (normal, carte Avantage, élève-étudiant-apprenti). Pas de prix en temps réel ni de TER. |
+| Bus | API publique de [Flixbus](https://www.flixbus.fr/) (celle de leur site, non documentée) | aucune | Vrais horaires, prix frais inclus, correspondances et places restantes. Chargée d'office pour les 5 meilleurs sites, à la demande pour les autres. Peut changer sans préavis. |
 | Météo | [Open-Meteo](https://open-meteo.com/en/docs/meteofrance-api) | aucune | Gratuit pour un usage non commercial (600 appels/min, 10 000/jour par visiteur). |
 | Route | [OSRM](https://project-osrm.org/) (serveur de démonstration) | aucune | Service `table` : durées et distances vers ~100 spots en une requête. Données © OpenStreetMap. |
 | Train (facultatif) | [API SNCF / Navitia](https://numerique.sncf.com/startup/api/) | clé gratuite (5 000 requêtes/mois) | L'utilisateur colle sa clé dans « Réglages avancés ». Elle reste dans son navigateur. Sans clé : temps de train estimé. |
@@ -76,12 +81,16 @@ La journée n'est retenue que s'il existe **au moins 2 heures volables d'affilé
 
 **2. Qualité météo (0–100)** : chaque heure volable reçoit une note de confort (vent dans la plage idéale, rafales faibles, vent dans l'axe du déco, ciel partiellement nuageux, instabilité modérée, vent faible en altitude). Le meilleur créneau est celui qui maximise *note moyenne × bonus de durée* (0,85 pour 2 h, plein à partir de 4 h).
 
-**3. Trajet (0–100)** : 75 % durée aller (100 à 1 h, 0 à 8 h) et 25 % coût aller-retour par personne (100 à 15 €, 0 à 200 €). Un spot à 2 h passe donc devant un spot à 7 h à météo égale.
+**3. Destination** : un site vaut son meilleur décollage du jour ; la fiche montre aussi l'état de tous ses décos.
 
-- Voiture : durée et distance OSRM, carburant (6,5 L/100 km à 1,85 €/L), péages estimés, partage entre passagers.
-- Train : gare la plus proche du déco, temps estimé (TGV au-delà de 180 km), puis taxi ou navette jusqu'au déco. Avec une clé SNCF, horaires réels pour les 8 meilleurs spots.
+**4. Trajet (0–100)** : 75 % durée de l'aller (100 à 1 h, 0 à 12 h) et 25 % coût aller-retour par personne (100 à 15 €, 0 à 200 €). Un site à 2 h passe donc devant un site à 7 h à météo égale. Le mode choisi (Flixbus par défaut, train, voiture, ou le plus rapide) compte dans le score ; les trois sont détaillés sur chaque fiche :
 
-**4. Score global** = 60 % météo + 40 % trajet (curseur réglable). **Go** si score ≥ 65 *et* météo ≥ 60 *et* orientation connue. **Jouable** si score ≥ 40. **Passe ton chemin** sinon.
+- **Flixbus** : aller arrivant le jour J entre 5 h et midi (bus de nuit de la veille compris), retour le soir même après la fin du créneau, sinon le lendemain ; le moins cher de chaque sens, avec les autres horaires et le lien de réservation.
+- **Train** : fourchette officielle SNCF pour le couple de gares le moins cher (gares à moins de 40 km de ta ville), temps estimé ou horaires réels avec une clé SNCF.
+- **Voiture** : durée et distance OSRM jusqu'au déco, carburant (6,5 L/100 km à 1,85 €/L) et péages estimés, partage entre passagers.
+- **Accès au déco** depuis la gare ou l'arrêt : distance, taxi estimé et note du site (navette, téléphérique, funiculaire), affichés à part.
+
+**5. Score global** = 60 % météo + 40 % trajet (curseur réglable). **Go** si score ≥ 65 *et* météo ≥ 60 *et* orientation connue. **Jouable** si score ≥ 40. **Passe ton chemin** sinon.
 
 ## Structure
 
@@ -92,12 +101,20 @@ js/config.js                   seuils, pondérations, coûts, modèles, URL des 
 js/geo.js                      distances, angles, secteurs de vent
 js/scoring.js                  moteur de score (pur, testé)
 js/weather.js                  Open-Meteo : sonde des modèles, paquets, quota, fusion
-js/transport.js                communes, OSRM, coûts, train estimé, API SNCF
+js/transport.js                communes, OSRM, coûts voiture, train estimé, accès au déco, API SNCF
+js/flixbus.js                  Flixbus : villes, recherche, choix de l'aller et du retour
+js/fares.js                    tarifs SNCF de référence
+js/destinations.js             regroupement des décos par site
 js/app.js                      formulaire, orchestration, liste, carte Leaflet, rose des vents
 data/spots.json                décollages (généré)
+data/destinations.source.json  liste des sites de vol (éditable à la main)
+data/destinations.json         sites avec leurs décos, gare, arrêt Flixbus (généré)
+data/fares.json                tarifs SNCF utiles (généré)
 scripts/build-spots.mjs        génération de data/spots.json (Node ≥ 20, sans dépendance)
+scripts/build-destinations.mjs génération de data/destinations.json et data/fares.json
 tests/scoring.test.mjs         tests du moteur de score (node --test)
 tests/weather.test.mjs         tests du module météo avec réponses Open-Meteo simulées
+tests/transport.test.mjs       tests Flixbus (vraie réponse enregistrée), tarifs, destinations, coûts
 .github/workflows/pages.yml         tests + publication GitHub Pages
 .github/workflows/update-spots.yml  mise à jour hebdomadaire des décollages
 ```
@@ -143,7 +160,8 @@ Si la mise à jour hebdomadaire échoue au moment du push, vérifie *Settings �
 
 - Quota Open-Meteo gratuit : 600 appels/min, 5 000/h et 10 000/jour par connexion. Une analyse par défaut (250 points, AROME HD + AROME) coûte environ 450 appels, soit une dizaine d'analyses nouvelles par heure. Les prévisions sont gardées 30 min en mémoire : changer de ville, de niveau ou de créneau ne les retélécharge pas.
 - Le serveur OSRM de démonstration est gratuit mais sans garantie. S'il ne répond pas, l'appli bascule sur une estimation à vol d'oiseau et le signale.
-- Les prix de train sont des estimations (tarif moyen au km, hors promotions et cartes). Seule l'API SNCF donne des horaires réels, et pas de prix.
+- Prix du train : fourchettes officielles SNCF (TGV, OUIGO, Intercités), pas les prix du jour ; les trajets 100 % TER n'ont pas de tarif publié et restent estimés au kilomètre.
+- Flixbus : l'API utilisée est celle de leur site, sans documentation ni garantie ; si elle change, la fiche propose un lien de recherche Flixbus pré-rempli.
 - Le temps de trajet vise le décollage. Un déco qui se rejoint à pied (hike & fly) compte comme la route la plus proche.
 - La couverture des orientations dépend de la source : un déco sans orientation connue ne peut pas être « Go », au mieux « Jouable ».
 - Le parsing de l'API FFVL est défensif mais n'a pas pu être testé avec une vraie clé : les points incertains sont signalés dans `scripts/build-spots.mjs`.
