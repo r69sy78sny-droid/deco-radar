@@ -428,7 +428,7 @@ async function analyse() {
       for (const [i, c] of trains.entries()) {
         setStatus('Horaires SNCF…', 90 + (8 * i) / trains.length, `${i} / ${trains.length}`);
         try {
-          const j = await sncfJourney(ctx.origin, c.dest.station, s.date, s.sncfKey, signal);
+          const j = await sncfJourney(ctx.origin, c.dest.station, s.date, s.sncfKey, signal, c.train.fares?.fromUics);
           if (j) c.train = { ...c.train, real: j, hours: j.hours + c.train.access.hours, estimated: false };
         } catch (err) {
           if (err.name === 'AbortError') throw err;
@@ -692,7 +692,9 @@ function trainBlock(ctx, c) {
   if (!t) return `<div class="trip">${tripHead(TRAIN_ICON, 'Train', kind, c, '', 'pas de gare connue près du site')}</div>`;
   const station = c.dest.station;
   const time = t.real
-    ? `${t.real.departure.slice(0, 2)}h${t.real.departure.slice(2)} → ${t.real.arrival.slice(0, 2)}h${t.real.arrival.slice(2)}, ${t.real.transfers} corresp. (SNCF)`
+    ? `${t.real.departure.slice(0, 2)}h${t.real.departure.slice(2)} → ${t.real.arrival.slice(0, 2)}h${t.real.arrival.slice(2)} · ${fmtDuration(t.real.hours)} · ${
+        t.real.transfers ? `${t.real.transfers} corresp.` : 'direct'
+      }${t.real.modes?.length ? ` (${esc(t.real.modes.join(', '))})` : ''}${t.real.from ? ` depuis ${esc(t.real.from)}` : ''} · horaires SNCF`
     : `≈ ${fmtDuration(t.railHours)} jusqu’à ${esc(station.name)}`;
   if (!t.fares) {
     return `<div class="trip ${c.travelKind === kind ? 'chosen' : ''}">

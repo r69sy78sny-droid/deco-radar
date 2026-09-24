@@ -25,7 +25,8 @@ export async function loadFares() {
  * Côté destination, on prend la gare tarifée la plus proche du site qui a un tarif (les
  * `fareStations` sont triées par distance) ; côté départ, la gare à ≤ `maxKm` qui donne le prix
  * minimum le plus bas, à égalité la plus proche.
- * @returns {null | {from, to, toUic, offers: [{carrier, min, max, profile}], min, max, mid}}
+ * @returns {null | {from, fromUic, fromUics, to, toUic, offers: [{carrier, min, max, profile}], min, max, mid}}
+ *   fromUics = toutes les gares de départ qui ont un tarif vers cette gare (pour chercher les horaires).
  */
 export function trainFares(fares, origin, destination, profile = 'normal', maxKm = 40) {
   if (!fares?.pairs || !destination.fareStations?.length) return null;
@@ -34,7 +35,7 @@ export function trainFares(fares, origin, destination, profile = 'normal', maxKm
     .filter((s) => s.km <= maxKm)
     .sort((a, b) => a.km - b.km);
   for (const d of destination.fareStations) {
-    let best = null;
+    const candidates = [];
     for (const o of origins) {
       const rows = fares.pairs[`${o.uic}>${d}`];
       if (!rows?.length) continue;
@@ -42,11 +43,22 @@ export function trainFares(fares, origin, destination, profile = 'normal', maxKm
       if (!offers.length) continue;
       const min = Math.min(...offers.map((x) => x.min));
       const max = Math.max(...offers.map((x) => x.max));
-      if (!best || min < best.min) {
-        best = { from: o.name, to: fares.stations[d]?.name ?? d, toUic: d, offers, min, max, mid: (min + max) / 2 };
-      }
+      candidates.push({ o, offers, min, max });
     }
-    if (best) return best;
+    if (!candidates.length) continue;
+    // Le moins cher, à égalité le plus proche (les gares de départ sont déjà triées par distance).
+    const best = candidates.slice().sort((a, b) => a.min - b.min)[0];
+    return {
+      from: best.o.name,
+      fromUic: best.o.uic,
+      fromUics: candidates.map((c) => c.o.uic),
+      to: fares.stations[d]?.name ?? d,
+      toUic: d,
+      offers: best.offers,
+      min: best.min,
+      max: best.max,
+      mid: (best.min + best.max) / 2,
+    };
   }
   return null;
 }

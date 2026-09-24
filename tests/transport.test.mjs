@@ -12,7 +12,7 @@ import { evaluateDay } from '../js/scoring.js';
 import { parseRides, planRoundTrip, rideCost, shiftDate, rideTime, flixbusLink } from '../js/flixbus.js';
 import { trainFares } from '../js/fares.js';
 import { summarizeDestination } from '../js/destinations.js';
-import { carCostDetail, carCost, railEstimate, accessTo } from '../js/transport.js';
+import { carCostDetail, carCost, railEstimate, accessTo, betterJourney } from '../js/transport.js';
 
 // Filet de sécurité : un test qui tenterait un appel réseau échoue immédiatement.
 globalThis.fetch = async (url) => {
@@ -881,5 +881,34 @@ describe('accessTo', () => {
   test('déco sur place : 0 km, à pied', () => {
     const a = accessTo(gare, gare, COST_DEFAULTS);
     assert.deepEqual(a, { km: 0, hours: 0, taxi: 0, walk: true });
+  });
+});
+
+describe('betterJourney (choix du train avec la clé SNCF)', () => {
+  const j = (dep, arr, hours) => ({
+    departure: dep.replace(':', ''),
+    arrival: arr.replace(':', ''),
+    arrivalAt: `20260926T${arr.replace(':', '')}00`,
+    arrivalHour: Number(arr.slice(0, 2)),
+    hours,
+  });
+
+  test('arrivée avant midi : le plus court gagne (cas réel Paris → Clermont)', () => {
+    const viaLyon = j('06:53', '11:11', 4.3);
+    const direct = j('06:57', '10:33', 3.6);
+    assert.deepEqual([viaLyon, direct].sort(betterJourney)[0], direct);
+  });
+
+  test('une arrivée avant midi bat toujours une arrivée l’après-midi, même plus courte', () => {
+    const matin = j('05:10', '11:50', 6.7);
+    const aprem = j('14:10', '20:13', 6.0);
+    assert.deepEqual([aprem, matin].sort(betterJourney)[0], matin);
+  });
+
+  test('aucune arrivée le matin : la plus tôt, à égalité la plus courte (cas réel Paris → Chamonix)', () => {
+    const a = j('06:10', '13:13', 7.0);
+    const b = j('06:40', '13:13', 6.5);
+    const c = j('14:10', '20:13', 6.0);
+    assert.deepEqual([c, a, b].sort(betterJourney)[0], b);
   });
 });

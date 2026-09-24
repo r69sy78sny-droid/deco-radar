@@ -84,34 +84,78 @@ export function accessTo(from, target, cost, m = TRAIN_MODEL) {
   };
 }
 
+const SNCF_BASE = API.sncf.replace('/journeys', '');
+const stopAreas = new Map();
+
 /**
- * Horaires réels via l'API SNCF (Navitia) : trajet départ → gare de la destination, le matin du
- * jour choisi. Clé gratuite : https://numerique.sncf.com/startup/api/token-developpeur/
+ * Arrêt le plus proche d'un point (gare, RER…). L'API refuse un départ donné en coordonnées brutes
+ * (« Public transport is not reachable from origin ») : on part donc d'un arrêt. Mis en cache.
  */
-export async function sncfJourney(origin, station, date, key, signal) {
+async function nearestStopArea(point, key, signal) {
+  const k = `${point.lat.toFixed(4)},${point.lon.toFixed(4)}`;
+  if (!stopAreas.has(k)) {
+    const url = `${SNCF_BASE}/coords/${point.lon};${point.lat}/places_nearby?type[]=stop_area&distance=5000&count=1`;
+    const res = await fetch(url, { headers: { Authorization: key }, signal });
+    if (res.status === 401 || res.status === 403) throw new Error('Clé API SNCF refusée');
+    const data = res.ok ? await res.json() : {};
+    stopAreas.set(k, data.places_nearby?.[0]?.id ?? null);
+  }
+  return stopAreas.get(k);
+}
+
+/** Meilleur trajet pour voler : arrivée avant midi d'abord (le plus court), sinon l'arrivée la plus tôt. */
+export function betterJourney(a, b) {
+  const am = a.arrivalHour < 12;
+  const bm = b.arrivalHour < 12;
+  if (am !== bm) return am ? -1 : 1;
+  return am ? a.hours - b.hours : a.arrivalAt.localeCompare(b.arrivalAt) || a.hours - b.hours;
+}
+
+/** Trajets renvoyés par l'API pour un départ donné, mis en forme. */
+async function journeysFrom(from, station, date, key, signal) {
   const p = new URLSearchParams({
-    from: `${origin.lon};${origin.lat}`,
-    to: `${station.lon};${station.lat}`,
+    from,
+    to: station.uic ? `stop_area:SNCF:${station.uic}` : `${station.lon};${station.lat}`,
     datetime: `${date.replaceAll('-', '')}T050000`,
     datetime_represents: 'departure',
-    count: '4',
-    max_walking_duration_to_pt: '1800',
+    count: '8',
+    min_nb_journeys: '6',
   });
-  const res = await fetch(`${API.sncf}?${p}`, { headers: { Authorization: key }, signal });
+  const res = await fetch(`${SNCF_BASE}/journeys?${p}`, { headers: { Authorization: key }, signal });
   if (res.status === 401 || res.status === 403) throw new Error('Clé API SNCF refusée');
-  if (!res.ok) return null;
+  if (!res.ok) return [];
   const data = await res.json();
-  const journeys = (data.journeys ?? []).filter((j) => j.duration);
-  if (!journeys.length) return null;
-  // On privilégie une arrivée avant midi, puis la durée la plus courte.
-  const morning = journeys.filter((j) => Number(j.arrival_date_time.slice(9, 11)) < 12);
-  const best = (morning.length ? morning : journeys).sort((a, b) => a.duration - b.duration)[0];
-  return {
-    hours: best.duration / 3600,
-    departure: best.departure_date_time.slice(9, 13),
-    arrival: best.arrival_date_time.slice(9, 13),
-    transfers: best.nb_transfers,
-  };
+  return (data.journeys ?? [])
+    .filter((j) => j.duration)
+    .map((j) => {
+      const rides = j.sections.filter((sec) => sec.type === 'public_transport');
+      return {
+        hours: j.duration / 3600,
+        departure: j.departure_date_time.slice(9, 13),
+        arrival: j.arrival_date_time.slice(9, 13),
+        arrivalAt: j.arrival_date_time,
+        arrivalHour: Number(j.arrival_date_time.slice(9, 11)),
+        transfers: j.nb_transfers,
+        // « Paris - Gare de Lyon - Hall 1 & 2 (Paris) » → « Paris - Gare de Lyon »
+        from: rides[0]?.from?.name?.replace(/\s*\([^)]*\)$/, '').replace(/\s+-\s+Hall.*$/, '') ?? null,
+        modes: [...new Set(rides.map((sec) => sec.display_informations?.commercial_mode).filter(Boolean))],
+      };
+    });
+}
+
+/**
+ * Horaires réels via l'API SNCF (Navitia) jusqu'à la gare de la destination (code UIC), le matin du
+ * jour choisi. Départ : les gares qui ont un tarif SNCF vers ce site (`fromUics`, 3 au plus : à Paris,
+ * Bercy pour Clermont, Gare de Lyon pour les Alpes), sinon l'arrêt le plus proche. Depuis un arrêt
+ * quelconque, l'API rate souvent le train direct d'une autre gare. Pas de prix dans cette API.
+ * Clé gratuite : https://numerique.sncf.com/startup/api/token-developpeur/
+ */
+export async function sncfJourney(origin, station, date, key, signal, fromUics = []) {
+  const froms = fromUics.length
+    ? fromUics.slice(0, 3).map((uic) => `stop_area:SNCF:${uic}`)
+    : [(await nearestStopArea(origin, key, signal)) ?? `${origin.lon};${origin.lat}`];
+  const all = (await Promise.all(froms.map((f) => journeysFrom(f, station, date, key, signal)))).flat();
+  return all.length ? all.sort(betterJourney)[0] : null;
 }
 
 /** Liens d'itinéraire Google Maps (format d'URL public et documenté). */
